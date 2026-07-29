@@ -1,0 +1,1 @@
+package com.playsphere.report;import java.util.List;import org.springframework.data.jpa.repository.JpaRepository;public interface ReportRepository extends JpaRepository<Report,String>{List<Report> findByStatusOrderByCreatedAtAsc(String status);List<Report> findByReporterUserIdOrderByCreatedAtDesc(String userId);}

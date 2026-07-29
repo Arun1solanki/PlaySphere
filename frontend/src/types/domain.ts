@@ -1,0 +1,268 @@
+export type TeamPlayerSummary = {
+  id: string
+  displayName: string
+  profileImageUrl?: string
+  city?: string
+  locality?: string
+  skillLevel?: string
+  playingPosition?: string
+}
+
+export type TeamMemberView = {
+  id: string
+  userId: string
+  memberRole: string
+  joinedAt: string
+  user: TeamPlayerSummary
+}
+
+export type Team = {
+  id: string
+  captainUserId: string
+  name: string
+  sport: string
+  city: string
+  locality: string
+  skillLevel: string
+  description?: string
+  logoUrl?: string
+  maxMembers: number
+  visibility: string
+  joinMode: string
+  status: string
+  createdAt: string
+  updatedAt: string
+  memberCount: number
+  captain?: TeamPlayerSummary
+  members: TeamMemberView[]
+}
+
+export type RecruitmentPost = {
+  id: string
+  teamId: string
+  createdByUserId: string
+  title: string
+  sport: string
+  positionsNeeded: string
+  playersNeeded: number
+  skillLevel: string
+  city: string
+  locality: string
+  description?: string
+  applicationDeadline?: string
+  status: string
+}
+
+export type Turf = {
+  id: string
+  ownerUserId: string
+  name: string
+  description?: string
+  addressLine: string
+  city: string
+  locality: string
+  latitude?: number
+  longitude?: number
+  sports: string
+  amenities?: string
+  basePrice: number
+  coverImageUrl?: string
+  status: string
+  rejectionReason?: string
+}
+
+export type NearbyTurf = {
+  turf: Turf
+  distanceKm: number
+}
+
+export type GeocodingResult = {
+  displayName: string
+  latitude: number
+  longitude: number
+  addressLine: string
+  city: string
+  locality: string
+}
+
+export type TurfSlot = {
+  id: string
+  turfId: string
+  startAt: string
+  endAt: string
+  price: number
+  status: string
+}
+
+export type TurfEquipment = {
+  id: string
+  turfId: string
+  name: string
+  description?: string
+  quantity: number
+  pricePerBooking: number
+  active: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export type Booking = {
+  id: string
+  bookingCode: string
+  qrToken?: string
+  playerUserId: string
+  turfId: string
+  slotId: string
+  amount: number
+  status: string
+  paymentStatus: string
+  cancellationReason?: string
+  checkedInAt?: string
+  createdAt: string
+}
+
+export type SportsEvent = {
+  id: string
+  organizerUserId: string
+  title: string
+  description?: string
+  sport: string
+  eventType: string
+  registrationType: string
+  city: string
+  locality: string
+  venueName?: string
+  turfId?: string
+  turfSlotId?: string
+  startAt: string
+  endAt: string
+  registrationDeadline: string
+  minPlayers: number
+  maxPlayers: number
+  entryFee: number
+  bannerUrl?: string
+  status: string
+}
+
+export type EventRegistration = {
+  id: string
+  eventId: string
+  userId: string
+  teamId?: string
+  status: string
+  paymentStatus: string
+  createdAt: string
+}
+
+export type Match = {
+  id: string
+  eventId: string
+  title: string
+  homeName: string
+  awayName: string
+  scheduledAt: string
+  venue?: string
+  homeScore?: number
+  awayScore?: number
+  status: string
+}
+
+export type Payment = {
+  id: string
+  userId: string
+  purpose: string
+  referenceId: string
+  provider: string
+  providerOrderId?: string
+  amount: number
+  currency: string
+  status: string
+  createdAt: string
+}
+
+export type Refund = {
+  id: string
+  paymentId: string
+  requestedByUserId: string
+  reason: string
+  requestedAmount: number
+  status: string
+  decisionNote?: string
+  createdAt: string
+}
+
+export type Notification = {
+  id: string
+  type: string
+  title: string
+  message: string
+  actionUrl?: string
+  readAt?: string
+  createdAt: string
+}
+
+export type Conversation = {
+  id: string
+  conversationType: string
+  referenceId?: string
+  title: string
+  createdAt: string
+}
+
+export type ChatMessage = {
+  id: string
+  conversationId: string
+  senderUserId: string
+  senderDisplayName: string
+  senderProfileImageUrl?: string
+  body: string
+  createdAt: string
+}
+
+export type Report = {
+  id: string
+  reporterUserId: string
+  targetType: string
+  targetId: string
+  reason: string
+  description: string
+  status: string
+  priority: string
+  resolutionNote?: string
+  createdAt: string
+}
+
+export type AuditLog = {
+  id: string
+  actorUserId?: string
+  action: string
+  targetType: string
+  targetId?: string
+  details?: string
+  createdAt: string
+}
+
+export type Review = {
+  id: string
+  authorUserId: string
+  targetType: string
+  targetId: string
+  rating: number
+  comment?: string
+  status: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type PlayerDiscovery = {
+  userId: string
+  fullName: string
+  profileImageUrl?: string
+  city: string
+  locality: string
+  preferredSports?: string
+  skillLevel?: string
+  playingPosition?: string
+  availabilitySummary?: string
+  bio?: string
+}

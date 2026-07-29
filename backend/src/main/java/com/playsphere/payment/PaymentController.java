@@ -1,0 +1,14 @@
+package com.playsphere.payment;
+import com.playsphere.common.ApiResponse;import com.playsphere.user.CurrentUserService;import jakarta.validation.Valid;import jakarta.validation.constraints.*;import java.math.BigDecimal;import java.util.List;import org.springframework.security.access.prepost.PreAuthorize;import org.springframework.security.core.Authentication;import org.springframework.web.bind.annotation.*;
+@RestController @RequestMapping("/api") public class PaymentController{
+ private final PaymentService service;private final CurrentUserService current;public PaymentController(PaymentService s,CurrentUserService c){service=s;current=c;}
+ public record CreatePaymentRequest(@Pattern(regexp="BOOKING|EVENT_REGISTRATION") String purpose,@NotBlank String referenceId,@NotNull @DecimalMin("0.00") BigDecimal amount){}public record RefundRequestInput(@NotBlank @Size(max=500) String reason,@NotNull @DecimalMin("0.01") BigDecimal amount){}public record RefundDecision(boolean approve,@Size(max=500) String note){}
+ @PostMapping("/payments") public ApiResponse<Payment> create(@Valid @RequestBody CreatePaymentRequest r,Authentication a){return ApiResponse.ok("Payment initialized",service.create(current.require(a).getId(),r));}
+ @GetMapping("/payments/mine") public ApiResponse<List<Payment>> mine(Authentication a){return ApiResponse.ok("Payments",service.mine(current.require(a).getId()));}
+ @GetMapping("/payments/earnings/organizer") @PreAuthorize("hasRole('ORGANIZER')") public ApiResponse<List<Payment>> organizerEarnings(Authentication a){return ApiResponse.ok("Organizer earnings",service.organizerEarnings(current.require(a).getId()));}
+ @GetMapping("/payments/earnings/turf-owner") @PreAuthorize("hasRole('TURF_OWNER')") public ApiResponse<List<Payment>> turfOwnerEarnings(Authentication a){return ApiResponse.ok("Turf owner earnings",service.turfOwnerEarnings(current.require(a).getId()));}
+ @PostMapping("/payments/{id}/refunds") public ApiResponse<RefundRequest> refund(@PathVariable String id,@Valid @RequestBody RefundRequestInput r,Authentication a){return ApiResponse.ok("Refund requested",service.requestRefund(current.require(a).getId(),id,r));}
+ @GetMapping("/refunds/mine") public ApiResponse<List<RefundRequest>> myRefunds(Authentication a){return ApiResponse.ok("Refund requests",service.myRefunds(current.require(a).getId()));}
+ @GetMapping("/admin/refunds") @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')") public ApiResponse<List<RefundRequest>> pending(){return ApiResponse.ok("Pending refunds",service.pendingRefunds());}
+ @PatchMapping("/admin/refunds/{id}") @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')") public ApiResponse<RefundRequest> decide(@PathVariable String id,@RequestBody RefundDecision r,Authentication a){return ApiResponse.ok("Refund decision saved",service.decideRefund(current.require(a).getId(),id,r));}
+}

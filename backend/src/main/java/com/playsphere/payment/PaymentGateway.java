@@ -1,0 +1,1 @@
+package com.playsphere.payment;public interface PaymentGateway{GatewayOrder createOrder(Payment payment);void refund(Payment payment,java.math.BigDecimal amount);record GatewayOrder(String provider,String orderId,boolean autoPaid,String paymentId){}}

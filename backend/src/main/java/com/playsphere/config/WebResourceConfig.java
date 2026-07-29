@@ -1,0 +1,2 @@
+package com.playsphere.config;import java.nio.file.Path;import org.springframework.context.annotation.Configuration;import org.springframework.web.servlet.config.annotation.*;
+@Configuration public class WebResourceConfig implements WebMvcConfigurer{public void addResourceHandlers(ResourceHandlerRegistry registry){registry.addResourceHandler("/uploads/**").addResourceLocations(Path.of("uploads").toAbsolutePath().toUri().toString());}}
