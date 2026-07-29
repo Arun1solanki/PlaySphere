@@ -1,0 +1,54 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:playsphere;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: false
+
+app:
+  frontend-url: http://localhost:5173
+  jwt:
+    secret-base64: cGxheXNwaGVyZS10ZXN0LXNlY3JldC1rZXktMzItYnl0ZXMtbG9uZw==
+    access-minutes: 15
+    refresh-days: 14
+  session:
+    cookie-name: playsphere_refresh
+    secure-cookie: false
+    same-site: Strict
+    regular-login-hours: 12
+    player-idle-minutes: 60
+    organizer-idle-minutes: 45
+    turf-owner-idle-minutes: 45
+    admin-idle-minutes: 20
+    super-admin-idle-minutes: 15
+  email:
+    provider: log
+    verification-minutes: 30
+    password-reset-minutes: 30
+    resend-cooldown-seconds: 0
+    brevo:
+      api-key: ""
+      sender-email: ""
+      sender-name: PlaySphere
+  seed-admin:
+    enabled: false
+    email: admin@playsphere.local
+    password: ChangeMe@12345
+  payment:
+    provider: development
+    razorpay:
+      key-id: ""
+      key-secret: ""
+      webhook-secret: ""
+  storage:
+    provider: local
+    cloudinary:
+      cloud-name: ""
+      api-key: ""
+      api-secret: ""
